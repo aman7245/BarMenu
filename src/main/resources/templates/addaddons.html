@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Add Addons</title>
+<script>
+function myFunction() {
+    var status = confirm("Press OK to delete Addons !!!");
+    if(status){
+    	return true;
+    }
+    else{
+    	return false;
+    }
+}
+</script>
+<link href="../static/css/core.css"
+      th:href="@{/css/core.css}"
+      rel="stylesheet" media="screen" />
+</head>
+<body class="background">
+<div >
+	<h2 align="center"><font color="696969">Add New Addon</font></h2>
+	<p th:text="*{error}"></p>
+<form action="/addons/addnewaddons" method="POST" th:object="${addonsvo}" >
+				<input type="hidden" th:field="*{mainItemId}" />
+	<table>
+			
+			<tr>
+				<td>Item Name:</td>
+				<td><input type="text" th:field="*{mainItemName}" readonly="readonly"/></td>
+			</tr>
+			
+			<tr>
+				<td>Addon Name<sup>*</sup>:</td>
+				<td><input type="text" th:field="*{addonName}" required="required"/></td>
+			</tr>
+			<tr>
+				<td><button type="reset" class="button">Clear</button></td>
+				<td><button type="submit" class="button">Save</button></td>
+			</tr>
+		</table>
+
+</form>
+	<br/><h3 align="center"><font color="696969">Addons</font></h3>
+		<form action="/addons/findaddons">
+		<table>
+			<tr><th>Addon Name</th>
+				<th></th><th></th><th></th>	
+			</tr>
+			<tr th:each="addon : ${addonsList}">
+				<td th:text="${addon.addonName}"></td>
+				<!--  <td><a th:href="@{/updatepackage/{id}(id=${videoPackage.id})}">
+                <button type="button" class="button">EDIT</button></a> </td> -->
+				
+				<td><a onclick="return myFunction()" th:href="@{/addons/deleteaddon/{addonId}(addonId=${addon.addonId})}" >
+                	<button type="button" class="button">DELETE</button></a></td>
+			</tr>
+		</table>
+		</form>
+</div>
+
+</body>
+</html>

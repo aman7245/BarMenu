@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Home Page</title>
+	<script>
+	function myFunction() {
+	    var status = confirm("Press OK to delete topic !!!");
+	    if(status){
+	    	return true;
+	    }
+	    else{
+	    	return false;
+	    }
+	}
+	</script>
+       <link href="../static/css/core.css"
+          th:href="@{/css/core.css}"
+          rel="stylesheet" media="screen" />
+</head>
+<body class="background">
+
+	<h2 align="center"><font color="696969">Menu List</font></h2><br/>
+	<a th:href="@{/addNewItem}">
+    	<button type="button" class="button">Add Main Item</button><br/></a><br/>
+<form action="#" th:action="@{/findAllItem}"  method="post">
+<table>
+			<tr>
+				<th>Item Name</th>
+				<th>Item Code</th>
+				<th>AddOns</th>
+			</tr>
+			<tr th:each="mainItem : ${list}" >
+				<td th:text="${mainItem.itemName}"></td>
+				<td th:text="${mainItem.itemCode}"></td>
+				<td th:text="${mainItem.addons}"></td>
+				<td><a th:href="@{/deleteItem/{id}(id=${mainItem.id})}">
+                <button onclick="return myFunction()" type="button" class="button" >DELETE</button></a> </td>
+                <td><a th:href="@{/addons/addAddons/{id}(id=${mainItem.id})}">
+                <button type="button" class="button">ADD Addons</button></a></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>
